@@ -18,5 +18,4 @@ public class DriverInitializer {
                 throw new IllegalArgumentException("Incorrect browser type!");
         }
     }
-
 }
