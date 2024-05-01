@@ -7,8 +7,8 @@ Feature: Search by the search field
             Given I open Tesco website
 
             And I accept cookies
-            And I click on 'Search' field
             And I type 'Cucumber' into search field
 
             When I press the 'Search' button
-            Then Results page with entered value is opened
+            Then Search results page is opened
+            And 'Cucumber' value is shown on page

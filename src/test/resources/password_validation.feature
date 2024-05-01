@@ -2,15 +2,15 @@ Feature: Password field validation on Registration page
 
     Rule: Password should be validated by certain rules
 
+      Background:
+        Given I open Tesco website
+        And I accept cookies
+        And I click on 'Register' button
+
       Scenario Outline: Password field left empty
 
-        Given I open Tesco website
-
-        And I accept cookies
-        And I click on 'Registration' button
-
-        When I enter "<email>" and "<password>"
-        And I click on 'Next' button
+        Given I enter '<email>' and '<password>'
+        When I click on 'Next' button
         Then I see validation error for password
 
         Examples:
@@ -20,13 +20,8 @@ Feature: Password field validation on Registration page
 
       Scenario Outline: Password field with less then 8 letters and numbers
 
-        Given I open Tesco website
-
-        And I accept cookies
-        And I click on 'Registration' button
-
-        When I enter "<email>" and "<password>"
-        And I click on 'Next' button
+        Given I enter "<email>" and "<password>"
+        When I click on 'Next' button
         Then I see validation error for password
 
         Examples:
@@ -36,13 +31,8 @@ Feature: Password field validation on Registration page
 
       Scenario Outline: Password field with all rules fulfilled
 
-        Given I open Tesco website
-
-        And I accept cookies
-        And I click on 'Registration' button
-
-        When I enter "<email>" and "<password>"
-        And I click on 'Next' button
+        Given I enter "<email>" and "<password>"
+        When I click on 'Next' button
         Then I don't see validation error for password
 
         Examples:
