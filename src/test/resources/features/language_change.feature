@@ -1,3 +1,5 @@
+@SmokeTest
+
 Feature: Language change
 
     Rule: Language change is allowed

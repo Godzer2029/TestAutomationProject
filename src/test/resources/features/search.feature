@@ -1,3 +1,5 @@
+@SmokeTest
+
 Feature: Search by the search field
 
     Rule: Search is allowed

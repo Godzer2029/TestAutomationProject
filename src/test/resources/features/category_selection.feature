@@ -1,3 +1,5 @@
+@SmokeTest
+
 Feature: Groceries navigation dropdown
 
     Rule: Navigation tabs should lead to the proper categories
