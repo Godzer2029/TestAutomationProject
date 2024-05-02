@@ -39,4 +39,12 @@
 
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>myRepository</id>
+            <name>My Repository</name>
+            <url>http://example.com/repository</url>
+        </repository>
+    </distributionManagement>
+
 </project>
