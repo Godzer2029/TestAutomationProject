@@ -43,7 +43,7 @@
         <repository>
             <id>myRepository</id>
             <name>My Repository</name>
-            <url>http://example.com/repository</url>
+            <url>https://github.com/Godzer2029/TestAutomationProject</url>
         </repository>
     </distributionManagement>
 
