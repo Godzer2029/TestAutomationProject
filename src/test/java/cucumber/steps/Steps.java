@@ -1,5 +1,6 @@
-package cucumber;
+package cucumber.steps;
 
+import cucumber.steps.MainPage;
 import driver.Settings;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

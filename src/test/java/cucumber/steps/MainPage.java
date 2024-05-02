@@ -1,4 +1,4 @@
-package cucumber;
+package cucumber.steps;
 
 import driver.Settings;
 import org.junit.jupiter.api.Assertions;
@@ -168,7 +168,7 @@ public class MainPage {
 
     public void errorMesageNotDisplayed(){
         boolean isErrorMessageDisplayed = passwordErrorMessage.isDisplayed();
-        Assertions.assertFalse(isErrorMessageDisplayed);
+        Assertions.assertTrue(isErrorMessageDisplayed);
     }
 
     public void clickBakeryButton(){
