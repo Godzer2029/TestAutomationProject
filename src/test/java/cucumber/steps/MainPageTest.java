@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Set;
 
-public class MainPage {
+public class MainPageTest {
 
     @FindBy(xpath = "//span[text()='Magyar']")
     WebElement magyarLanguageButtonCheck;
@@ -73,7 +73,7 @@ public class MainPage {
     WebDriver driver;
     WebDriverWait wait;
 
-    public MainPage(WebDriver driver) {
+    public MainPageTest(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
