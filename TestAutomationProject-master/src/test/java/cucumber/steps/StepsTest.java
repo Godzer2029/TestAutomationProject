@@ -20,7 +20,8 @@ public class StepsTest {
     WebDriverWait wait;
     MainPageTest mainPageTest;
 
-    //TODO Maybe it is better to make iOpenTescoWebsite and iAcceptCookies methods as @Before
+
+    //TODO Перенести в класс драйвер
     @Before
     public void initializeDriver() {
         ChromeOptions options = new ChromeOptions();
@@ -34,57 +35,36 @@ public class StepsTest {
         driver.quit();
     }
 
-    //TODO ****
     @Given("I open Tesco website")
     public void iOpenTescoWebsite() {
         driver.get(Settings.TESCO_URL);
         mainPageTest = new MainPageTest(driver);
-        mainPageTest.waitForAcceptButton();
+        mainPageTest.clickAcceptCookies();
     }
 
-    //TODO ****
-    @And("I accept cookies")
-    public void iAcceptCookies() {
-        mainPageTest.acceptCookies();
-    }
-
-    @And("'Magyar' button is present on page")
-    public void languageIsSetToEnglish() {
-        mainPageTest.magyarButtonPresent();
-    }
-
-    //TODO Magyar - not Hungarian
     @When("I change language to 'Magyar'")
     public void iChangeLanguageToHungarian() {
-        mainPageTest.clickOnChangeLanguageButton();
+        mainPageTest.changeLanguageToMagyar();
     }
 
-    //TODO Magyar - not Hungarian
     @Then("language is changed to 'Magyar'")
     public void languageIsChangedToHungarian() {
-        mainPageTest.currentLangIsMagyar();
-    }
-
-    //TODO Bad naming. May be confusing
-    @And("'English' button is present on page")
-    public void englishButtonIsPresentOnPage() {
-        mainPageTest.currentLangIsMagyar();
+        mainPageTest.isCurrentLanguageMagyar();
     }
 
     @When("I change language to 'English'")
     public void iChangeLanguageToEnglish() {
-        mainPageTest.clickOnChangeLanguageButton();
+        mainPageTest.changeLanguageToEnglish();
     }
 
     @Then("language is changed to 'English'")
     public void languageIsChangedToEnglish() {
-        mainPageTest.magyarButtonPresent();
+        mainPageTest.currentLanguageIsEnglish();
     }
 
-
-    @And("I type 'Cucumber' into search field")
-    public void iTypeCucumberIntoSearchField() {
-        mainPageTest.inputValueForSearchField();
+    @Then("I type {string} into search field")
+    public void iTypeIntoSearchField(String inputValue) {
+        mainPageTest.inputValuesIntoSearchField(inputValue);
     }
 
     @When("I press the 'Search' button")
@@ -94,12 +74,17 @@ public class StepsTest {
 
     @Then("Search results page is opened")
     public void resultsPageWithEnteredValueIsOpened() {
-        mainPageTest.waitForResultField();
+        mainPageTest.searchResultPageOpened();
     }
 
-    @And("'Cucumber' value is shown on page")
-    public void cucumberValueIsShownOnPage() {
-        mainPageTest.checkSearchResultValueForCucumber();
+    @And("Message about unsuccessful search is shown")
+    public void messageAboutUnsuccessfulSearchIsShown() {
+        mainPageTest.messageAboutUnsuccessfulSearch();
+    }
+
+    @And("Shop and Search buttons are presented on page and clickable")
+    public void shopOrSearchButtonArePresentedOnPageAndClickable() {
+        mainPageTest.shopAndSearchButtons();
     }
 
     @When("I click on 'Online Club' button")
@@ -119,22 +104,16 @@ public class StepsTest {
 
     @Given("I enter {string} and {string}")
     public void iEnterEmailAndPassword(String email, String password) {
-        mainPageTest.inputValuesForEmailAndPasswordFields();
+        mainPageTest.enterEmailAndPassword(email,password);
     }
 
     @When("I click on 'Next' button")
     public void iClickOnNextButton() {
         mainPageTest.clickOnNextButton();
     }
-
-    @Then("I see validation error for password")
-    public void iSeeValidationErrorForPassword() {
-        mainPageTest.waitForPasswordErrorMessage();
-    }
-
-    @Then("I don't see validation error for password")
-    public void iDonTSeeValidationErrorForPassword() {
-        mainPageTest.errorMesageNotDisplayed();
+    @Then("I should see {string} for password")
+    public void iShouldSeeForPassword(String expectedResult) {
+        mainPageTest.validationResultForPassword(expectedResult);
     }
 
     @And("I click on 'Bakery' button")
@@ -150,16 +129,5 @@ public class StepsTest {
     @When("I click on 'Cake' button")
     public void iClickOnCakeButton() {
         mainPageTest.clickCakeButton();
-    }
-
-    //TODO result is for all
-    @Then("'Cake' category page is opened")
-    public void cakeCategoryPageIsOpened() {
-        mainPageTest.waitForResultField();
-    }
-
-    @And("'Cake' value is shown on page")
-    public void cakeValueIsShownOnPage() {
-        mainPageTest.checkSearchResultValueForCake();
     }
 }

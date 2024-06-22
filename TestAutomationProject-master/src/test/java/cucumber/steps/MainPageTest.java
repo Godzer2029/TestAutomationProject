@@ -3,7 +3,6 @@ package cucumber.steps;
 import driver.Settings;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,52 +13,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Set;
 
+import static locators.Locators.*;
+
 public class MainPageTest {
-
-    @FindBy(xpath = "//span[text()='Magyar']")
-    WebElement magyarLanguageButtonCheck;
-
-    @FindBy(xpath = "//span[text()='English']")
-    WebElement englishLanguageButtonCheck;
-
-    @FindBy(id = "utility-header-language-switch-link")
-    WebElement languageChangeButton;
-
-    @FindBy(xpath = "//button[span[text()='Accept all cookies']]")
-    WebElement acceptCookiesButton;
-
-    @FindBy(id = "search-input")
-    WebElement searchField;
-
-    @FindBy(xpath = "//*[@id='search-form']/button")
-    WebElement searchButton;
-
-    //TODO Move to different class as it is not main page
-    @FindBy(xpath = "//h1")
-    WebElement searchResultField;
-
-    @FindBy(xpath = "//a[text()='Online Club']")
-    WebElement onlineClubButton;
-
-    @FindBy(xpath = "//span[text()='Register']")
-    WebElement registerButton;
-
-    //TODO Move to different class as it is not main page
-    @FindBy(id = "email")
-    WebElement emailField;
-
-    //TODO Move to different class as it is not main page
-    @FindBy(id = "password")
-    WebElement passwordField;
-
-    //TODO Move to different class as it is not main page
-    @FindBy(xpath = "//*[text()='Next']")
-    WebElement nextButton;
-
-    //TODO Move to different class as it is not main page
-    //TODO Make shorter xpath, if possible
-    @FindBy(xpath = "//*[@id=\"content\"]/div/div[1]/div/div[2]/section/div/div/form/ul/li[2]/div/div")
-    WebElement passwordErrorMessage;
 
     @FindBy(xpath = "//span[text()='Bakery']")
     WebElement bakeryButton;
@@ -70,106 +26,115 @@ public class MainPageTest {
     @FindBy(xpath = "//span[text()='Cake']")
     WebElement cakeButton;
 
-    WebDriver driver;
-    WebDriverWait wait;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
 
+    //конструктор класса
     public MainPageTest(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
     }
 
-    public void waitForAcceptButton() {
-        wait.until(ExpectedConditions.visibilityOf(acceptCookiesButton));
+    //TODO Вынести вэйт
+    public void clickAcceptCookies() {
+        WebElement acceptCookiesElement = wait.until(ExpectedConditions.elementToBeClickable(ACCEPT_COOKIES_BUTTON));
+        acceptCookiesElement.click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(ACCEPT_COOKIES_BUTTON));
     }
-
-    public void acceptCookies() {
-        acceptCookiesButton.click();
+    public void changeLanguageToMagyar() {
+    WebElement currentLanguageIsEnglish = driver.findElement(MAGYAR_LANGUAGE_BUTTON_CHECK);
+    if (!currentLanguageIsEnglish.getText().equals("English")) {
+        WebElement languageChangeButtonElement = driver.findElement(LANGUAGE_CHANGE_BUTTON);
+        languageChangeButtonElement.click();
     }
-
-    public boolean magyarButtonPresent() {
-        return magyarLanguageButtonCheck.getText().equals("Magyar");
     }
-
-    public boolean currentLangIsMagyar() {
-        return englishLanguageButtonCheck.getText().equals("English");
+    public void isCurrentLanguageMagyar(){
+        String expectedUrl = Settings.TESCO_MAGYAR_URL;
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals(expectedUrl,currentUrl);
     }
-
-    public void clickOnChangeLanguageButton() {
-        languageChangeButton.click();
+    public void changeLanguageToEnglish() {
+        WebElement currentLanguageIsMagyar = driver.findElement(ENGLISH_LANGUAGE_BUTTON_CHECK);
+        if (!currentLanguageIsMagyar.getText().equals("Magyar")) {
+            WebElement languageChangeButtonElement = driver.findElement(LANGUAGE_CHANGE_BUTTON);
+            languageChangeButtonElement.click();
+        }
     }
-
-    //TODO Is it possible to make in more generic and not just Cucumber o_o
-    public void inputValueForSearchField() {
-        searchField.sendKeys("Cucumber");
+    public void currentLanguageIsEnglish(){
+        String expectedUrl = Settings.TESCO_ENGLISH_URL;
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertEquals(expectedUrl,currentUrl);
     }
-
-    public void clickOnSearchButton() {
-        searchButton.click();
+    public void clickOnSearchButton(){
+        WebElement searchButtonElement = driver.findElement(SEARCH_BUTTON);
+        searchButtonElement.click();
     }
-
-    public void waitForResultField() {
-        wait.until(ExpectedConditions.visibilityOf(searchResultField));
+    public void inputValuesIntoSearchField(String inputValue){
+        WebElement searchFieldElement = driver.findElement(SEARCH_FIELD);
+        searchFieldElement.clear();
+        searchFieldElement.sendKeys(inputValue);
     }
-
-    //TODO Same cucumber here o_o
-    public void checkSearchResultValueForCucumber() {
-        String textFromResults = searchResultField.getText();
-        String expectedText = "Results for “Cucumber”";
-        Assertions.assertEquals(textFromResults, expectedText);
+    public void searchResultPageOpened(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_RESULT_FIELD));
+    }
+    public void messageAboutUnsuccessfulSearch(){
+        WebElement messageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(UNSUCCESSFUL_SEARCH_MESSAGE));
+        Assertions.assertTrue(messageElement.isDisplayed());
+    }
+    public void shopAndSearchButtons(){
+        WebElement searchButtonElement = wait.until(ExpectedConditions.elementToBeClickable(GROCERIES_SEARCH_BUTTON));
+        searchButtonElement.click();
+        WebElement shopGroceriesButtonElement = wait.until(ExpectedConditions.elementToBeClickable(SHOP_GROCERIES_BUTTON));
+        shopGroceriesButtonElement.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(GROCERIES_TREE));
     }
 
     public void clickOnOnlineClubButton() {
-        onlineClubButton.click();
+        WebElement onlineClubButtonElement = wait.until(ExpectedConditions.elementToBeClickable(ONLINE_CLUB_BUTTON));
+        onlineClubButtonElement.click();
     }
 
-    //TODO Loop is not needed
     public void switchTabCheck() {
         Set<String> windowHandles = driver.getWindowHandles();
         for (String windowHandle : windowHandles) {
             driver.switchTo().window(windowHandle);
         }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ONLINE_CLUB_LOGO));
         String expectedUtl = Settings.TESCO_ONLINE_CLUB_URL;
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals(expectedUtl, currentUrl);
     }
 
     public void clickOnRegisterButton(){
-        registerButton.click();
+        WebElement registerButtonElement = wait.until(ExpectedConditions.elementToBeClickable(REGISTER_BUTTON));
+        registerButtonElement.click();
     }
-    public void inputValuesForEmailAndPasswordFields(){
-        String[][] examplesData = {
-                {"123@gmail.com", null},
-                {"123@gmail.com", "abc1234"},
-                {"123@gmail.com", "abc12345"}
-        };
 
-        for (String[] rowData : examplesData){
-            String email = rowData[0];
-            String password = rowData[1];
-
-            emailField.sendKeys(email);
-            if (password != null) {
-                passwordField.sendKeys(password);
-            }
-
-            emailField.clear();
-            passwordField.clear();
-        }
+    public void enterEmailAndPassword(String email, String password) {
+        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(EMAIL_FIELD));
+        emailField.sendKeys(email);
+        WebElement passwordField = driver.findElement(PASSWORD_FIELD);
+        passwordField.sendKeys(password);
     }
 
     public void clickOnNextButton(){
-        nextButton.click();
+        WebElement nextButtonElement = wait.until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON));
+        nextButtonElement.click();
     }
+    public void validationResultForPassword(String expectedResult) {
+        if (!expectedResult.equals("valid")) {
+            WebElement validationMessageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_ERROR_MESSAGE));
+            String actualResult = validationMessageElement.getText();
 
-    public void waitForPasswordErrorMessage() {
-        wait.until(ExpectedConditions.visibilityOf(passwordErrorMessage));
-    }
-
-    public void errorMesageNotDisplayed(){
-        boolean isErrorMessageDisplayed = passwordErrorMessage.isDisplayed();
-        Assertions.assertTrue(isErrorMessageDisplayed);
+            if (expectedResult.equals("required")) {
+                Assertions.assertTrue(actualResult.contains("Please provide a password"));
+            } else if (expectedResult.equals("invalid")) {
+                Assertions.assertTrue(actualResult.contains("Password must be at least 8 letters and must include both numbers and letters."));
+            } else {
+                Assertions.fail("Unexpected validation result: " + expectedResult);
+            }
+        }
     }
 
     public void clickBakeryButton(){
@@ -186,11 +151,11 @@ public class MainPageTest {
         cakeButton.click();
     }
 
-    public void checkSearchResultValueForCake() {
-        String textFromResults = searchResultField.getText();
-        String expectedText = "Cake";
-        Assertions.assertEquals(textFromResults, expectedText);
-    }
+//    public void checkSearchResultValueForCake() {
+//        String textFromResults = searchResultField.getText();
+//        String expectedText = "Cake";
+//        Assertions.assertEquals(textFromResults, expectedText);
+//    }
 
 }
 

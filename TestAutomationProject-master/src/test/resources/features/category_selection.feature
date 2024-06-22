@@ -8,7 +8,6 @@ Feature: Groceries navigation dropdown
 
         Given I open Tesco website
 
-        And I accept cookies
         And I click on 'Bakery' button
         And I click on 'Pastry' button
 
