@@ -1,5 +1,3 @@
-@SmokeTest
-
 Feature: Online club information page
 
     Rule: New tab with Online Club information should be opened

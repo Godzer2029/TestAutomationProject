@@ -1,4 +1,3 @@
-@SmokeTest
 Feature: Password field validation on Registration page
 
   Rule: Password should be validated by certain rules

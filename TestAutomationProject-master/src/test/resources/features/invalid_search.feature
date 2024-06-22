@@ -1,5 +1,3 @@
-@SmokeTest
-
 Feature: Unsuccessful search by the search field
 
     Rule: Search with invalid values is allowed and shows appropriate message

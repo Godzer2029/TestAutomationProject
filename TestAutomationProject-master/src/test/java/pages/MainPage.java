@@ -1,33 +1,16 @@
 package pages;
 
 import driver.Settings;
-
-import io.cucumber.java.an.E;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pages.BasePage;
-
-import java.util.Set;
-
 import static locators.Locators.*;
 
-public class MainPageTest extends BasePage {
-    public MainPageTest(WebDriver driver){
+public class MainPage extends BasePage {
+    public MainPage(WebDriver driver){
         super(driver);
     }
-
-    @FindBy(xpath = "//span[text()='Bakery']")
-    WebElement bakeryButton;
-
-    @FindBy(xpath = "//span[text()='Pastry']")
-    WebElement pastryButton;
-
-    @FindBy(xpath = "//span[text()='Cake']")
-    WebElement cakeButton;
-
 
     //TODO Вынести вэйт
     public void clickAcceptCookies() {

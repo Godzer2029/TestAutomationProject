@@ -1,6 +1,6 @@
 package steps;
 
-import pages.MainPageTest;
+import pages.MainPage;
 import driver.DriverInitializer;
 import driver.Settings;
 import io.cucumber.java.After;
@@ -16,7 +16,7 @@ import pages.SearchPage;
 public class StepsTest {
 
     protected WebDriver driver;
-    private MainPageTest mainPageTest;
+    private MainPage mainPage;
     private final SearchPage searchPage;
     private final RegistrationPage registrationPage;
     private final OnlineClubPage onlineClubPage;
@@ -35,28 +35,28 @@ public StepsTest(){
     @Given("I open Tesco website")
     public void iOpenTescoWebsite() {
         driver.get(Settings.TESCO_URL);
-        mainPageTest = new MainPageTest(driver);
-        mainPageTest.clickAcceptCookies();
+        mainPage = new MainPage(driver);
+        mainPage.clickAcceptCookies();
     }
 
     @When("I change language to 'Magyar'")
     public void iChangeLanguageToHungarian() {
-        mainPageTest.changeLanguageToMagyar();
+        mainPage.changeLanguageToMagyar();
     }
 
     @Then("language is changed to 'Magyar'")
     public void languageIsChangedToHungarian() {
-        mainPageTest.isCurrentLanguageMagyar();
+        mainPage.isCurrentLanguageMagyar();
     }
 
     @When("I change language to 'English'")
     public void iChangeLanguageToEnglish() {
-        mainPageTest.changeLanguageToEnglish();
+        mainPage.changeLanguageToEnglish();
     }
 
     @Then("language is changed to 'English'")
     public void languageIsChangedToEnglish() {
-        mainPageTest.currentLanguageIsEnglish();
+        mainPage.currentLanguageIsEnglish();
     }
 
     @Then("I type {string} into search field")
@@ -115,21 +115,21 @@ public StepsTest(){
 
     @And("I click on 'Bakery' button")
     public void iClickOnBakeryButton() {
-        mainPageTest.clickBakeryButton();
+        mainPage.clickBakeryButton();
     }
 
     @And("I click on 'Pastry' button")
     public void iClickOnPastryButton() {
-        mainPageTest.clickPastryButton();
+        mainPage.clickPastryButton();
     }
 
     @When("I click on 'Cake' button")
     public void iClickOnCakeButton() {
-        mainPageTest.clickCakeButton();
+        mainPage.clickCakeButton();
     }
 
     @Then("{string} category page is opened")
     public void cakeCategoryPageIsOpened(String expectedResult) {
-        mainPageTest.checkSearchResultValue(expectedResult);
+        mainPage.checkSearchResultValue(expectedResult);
     }
 }
