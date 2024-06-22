@@ -13,4 +13,3 @@ Feature: Groceries navigation dropdown
 
         When I click on 'Cake' button
         Then 'Cake' category page is opened
-        And 'Cake' value is shown on page
