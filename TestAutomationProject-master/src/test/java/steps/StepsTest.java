@@ -16,7 +16,7 @@ import pages.SearchPage;
 public class StepsTest {
 
     protected WebDriver driver;
-    private MainPage mainPage;
+    private final MainPage mainPage;
     private final SearchPage searchPage;
     private final RegistrationPage registrationPage;
     private final OnlineClubPage onlineClubPage;
@@ -26,6 +26,7 @@ public StepsTest(){
     this.searchPage = new SearchPage(this.driver);
     this.registrationPage = new RegistrationPage(this.driver);
     this.onlineClubPage = new OnlineClubPage(this.driver);
+    this.mainPage = new MainPage(this.driver);
 }
     @After
     public void closeDriver(){
@@ -35,7 +36,6 @@ public StepsTest(){
     @Given("I open Tesco website")
     public void iOpenTescoWebsite() {
         driver.get(Settings.TESCO_URL);
-        mainPage = new MainPage(driver);
         mainPage.clickAcceptCookies();
     }
 

@@ -16,10 +16,9 @@ public class MainPage extends BasePage {
     public void clickAcceptCookies() {
         WebElement acceptCookiesElement = wait.until(ExpectedConditions.elementToBeClickable(ACCEPT_COOKIES_BUTTON));
         acceptCookiesElement.click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(ACCEPT_COOKIES_BUTTON));
     }
     public void changeLanguageToMagyar() {
-    WebElement currentLanguageIsEnglish = driver.findElement(MAGYAR_LANGUAGE_BUTTON_CHECK);
+    WebElement currentLanguageIsEnglish = wait.until(ExpectedConditions.visibilityOfElementLocated(MAGYAR_LANGUAGE_BUTTON_CHECK));
     if (!currentLanguageIsEnglish.getText().equals("English")) {
         WebElement languageChangeButtonElement = driver.findElement(LANGUAGE_CHANGE_BUTTON);
         languageChangeButtonElement.click();

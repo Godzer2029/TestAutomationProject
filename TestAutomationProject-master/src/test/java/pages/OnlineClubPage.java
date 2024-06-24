@@ -21,7 +21,9 @@ public class OnlineClubPage extends BasePage{
     }
 
     public void switchTabCheck() {
+        //получаем текущие окна
         Set<String> windowHandles = driver.getWindowHandles();
+        //переключаемся на новое окно
         for (String windowHandle : windowHandles) {
             driver.switchTo().window(windowHandle);
         }
